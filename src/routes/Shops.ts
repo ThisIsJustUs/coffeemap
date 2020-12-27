@@ -6,8 +6,11 @@ import {
     getShopById,
     updateShop,
 } from '../controllers/Shops';
+import isLoggedIn from '../middleware/isLoggedIn';
 
 const router = express.Router();
+
+router.use(isLoggedIn);
 
 router.get('/', getAllShops);
 router.get('/:id', getShopById);

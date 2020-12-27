@@ -85,7 +85,16 @@ router.post(
     passport.authenticate('local'),
     (req: Request, res: Response) => {
         res.send(req.user);
+        console.log(req.isAuthenticated());
     }
 );
+
+router.get('/test', (req: Request, res: Response) => {
+    res.send(req.isAuthenticated());
+});
+
+router.get('/unauthorized', (_req: Request, res: Response) => {
+    res.status(401).send('Sorry, unauthorised');
+});
 
 export { router, PassportConfiguration };
