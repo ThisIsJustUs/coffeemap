@@ -63,7 +63,7 @@ const PassportConfiguration = () => {
 
 //  Register User
 router.post('/register', async (req: Request, res: Response) => {
-    // Extract email and password from request
+    // // Extract email and password from request
     const { email, password } = req.body;
     const hash = await bcrypt.hash(password, 12);
 

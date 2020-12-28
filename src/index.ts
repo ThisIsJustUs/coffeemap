@@ -3,6 +3,8 @@ import { createConnection } from 'typeorm';
 import session from 'express-session';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
+import redis from 'redis';
+import connectRedis from 'connect-redis';
 import 'reflect-metadata';
 import { PassportConfiguration } from './routes/Auth';
 import { router as authRoutes } from './routes/Auth';
@@ -13,11 +15,15 @@ createConnection()
     .then(async () => {
         // create and setup express app
         const app = express();
+        const RedisStore = connectRedis(session);
+        const redisClient = redis.createClient();
 
         app.use(express.json());
         app.use(cookieParser());
         app.use(
             session({
+                name: 'sid',
+                store: new RedisStore({ client: redisClient }),
                 secret: 'somesecret',
                 resave: false,
                 saveUninitialized: false,
@@ -27,11 +33,11 @@ createConnection()
             })
         );
 
+        PassportConfiguration();
+
         // Passport
         app.use(passport.initialize());
         app.use(passport.session());
-
-        PassportConfiguration();
 
         app.use('/auth', authRoutes);
         app.use('/users', userRoutes);
