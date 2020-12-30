@@ -44,6 +44,6 @@ createConnection()
         app.use('/shops', shopRoutes);
 
         // start express server
-        app.listen(3000);
+        app.listen(4000);
     })
     .catch((error) => console.log(error));
