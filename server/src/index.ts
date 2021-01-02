@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { createConnection } from 'typeorm';
 import session from 'express-session';
 import passport from 'passport';
@@ -18,6 +19,7 @@ createConnection()
         const RedisStore = connectRedis(session);
         const redisClient = redis.createClient();
 
+        app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
         app.use(express.json());
         app.use(cookieParser());
         app.use(
