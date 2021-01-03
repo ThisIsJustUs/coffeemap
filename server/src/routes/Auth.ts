@@ -93,6 +93,11 @@ router.get('/test', (req: Request, res: Response) => {
     res.send(req.isAuthenticated());
 });
 
+router.get('/test-cookie', (_req: Request, res: Response) => {
+    res.cookie('hello', 'Cookies');
+    res.send('Hello from cookies');
+});
+
 router.get('/unauthorized', (_req: Request, res: Response) => {
     res.status(401).send('Sorry, unauthorised');
 });

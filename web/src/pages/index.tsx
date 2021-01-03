@@ -44,6 +44,7 @@ export default function IndexPage() {
                                     'Content-Type': 'application/json',
                                 },
                                 data: data,
+                                withCredentials: true,
                             };
 
                             try {
