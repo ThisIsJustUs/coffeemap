@@ -7,10 +7,10 @@ type CoffeeCardProps = {
 export const CoffeeCard: React.FC<CoffeeCardProps> = ({ image }) => {
     return (
         <div className='flex flex-col border-b-2 border-gray-100'>
-            <div className='flex justify-start mx-5 md:mx-10 py-7 md:py-10 flex-col md:flex-row'>
+            <div className='flex justify-start mx-5 md:mx-10 py-7 flex-col md:flex-row'>
                 <div>
                     <div
-                        className='bg-center bg-cover md:w-56 md:h-full w-full h-48 rounded-md'
+                        className='bg-center bg-cover md:w-56 w-full md:h-full h-48 rounded-md'
                         style={{
                             backgroundImage: `url(${image})`,
                         }}

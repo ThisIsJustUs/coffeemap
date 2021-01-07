@@ -1,7 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { CoffeeCard } from '../components/Coffeecard';
-import { Footer } from '../components/Footer';
 import { NavBar } from '../components/NavBar';
 
 const images = [
@@ -16,10 +15,10 @@ export default function Overview() {
     return (
         <div>
             <NavBar activePage='overview' />
-            <div className='h-screen flex justify-between bg-gray-50 pt-16'>
+            <div className='flex justify-between bg-gray-50 pt-16'>
                 {/* <!-- Static sidebar for desktop -->  */}
                 <div
-                    className='bg-indigo-700 flex flex-col md:flex-shrink-0'
+                    className='flex flex-col w-full'
                     style={{ width: '850px' }}
                 >
                     {images.map((card) => {
