@@ -1,12 +1,22 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 interface NavBarProps {}
 
 export const NavBar: React.FC<NavBarProps> = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const router = useRouter();
+
+    const logout = () => {
+        console.log('click');
+        axios.get('http://localhost:4000/auth/logout');
+        router.push('/');
+    };
+
     return (
         <div className='fixed w-full'>
             <nav className='bg-gray-50 shadow-md'>
@@ -169,8 +179,8 @@ export const NavBar: React.FC<NavBarProps> = () => {
                                             </a>
                                         </Link>
                                         <a
-                                            href='#'
-                                            className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                                            onClick={logout}
+                                            className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer'
                                             role='menuitem'
                                         >
                                             Sign out
