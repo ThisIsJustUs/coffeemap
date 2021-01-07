@@ -8,7 +8,7 @@ export default function IndexPage() {
             <Head>
                 <title>Welcome to Coffeemap</title>
             </Head>
-            <NavBar activePage='Dashboard' />
+            <NavBar />
             <div className='flex justify-center flex-col'>
                 <h1 className='md:text-8xl text-5xl text-center'>
                     Welcome to Coffeemap ☕️
