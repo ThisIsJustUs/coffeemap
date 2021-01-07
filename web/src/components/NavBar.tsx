@@ -2,11 +2,9 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
 
-interface NavBarProps {
-    activePage: string;
-}
+interface NavBarProps {}
 
-export const NavBar: React.FC<NavBarProps> = ({ activePage }) => {
+export const NavBar: React.FC<NavBarProps> = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     return (

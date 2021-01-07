@@ -37,7 +37,9 @@ export default function IndexPage() {
                 <title>Register | Coffeemap</title>
             </Head>
             <div className='flex flex-col justify-between h-screen'>
-                <NavBar activePage='Dashboard' />
+                <div>
+                    <NavBar />
+                </div>
                 <div className='flex justify-center'>
                     <div className='w-3/4 md:max-w-md m-7'>
                         <Formik
@@ -104,7 +106,7 @@ export default function IndexPage() {
                                         <Button
                                             type='submit'
                                             isLoading={props.isSubmitting}
-                                            className='bg-green-500 text-white px-5 py-2 rounded-md text-base'
+                                            className='bg-green-600 text-white px-5 py-2 rounded-md text-base'
                                         >
                                             Submit
                                         </Button>

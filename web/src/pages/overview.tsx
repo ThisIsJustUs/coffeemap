@@ -14,7 +14,7 @@ const images = [
 export default function Overview() {
     return (
         <div>
-            <NavBar activePage='overview' />
+            <NavBar />
             <div className='flex justify-between bg-gray-50 pt-16'>
                 {/* <!-- Static sidebar for desktop -->  */}
                 <div

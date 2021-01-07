@@ -10,7 +10,9 @@ export const MyInput: React.FC<InputFieldProps> = ({ label, ...props }) => {
     const [field, { error, touched }] = useField(props);
     return (
         <div className='py-4'>
-            <label htmlFor={field.name}>{label}</label>
+            <label className='font-serif' htmlFor={field.name}>
+                {label}
+            </label>
             <input
                 {...field}
                 {...props}
@@ -18,7 +20,7 @@ export const MyInput: React.FC<InputFieldProps> = ({ label, ...props }) => {
                 className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
             />
             {error && touched ? (
-                <span className='text-red-500'>{error}</span>
+                <span className='text-red-500 font-serif'>{error}</span>
             ) : null}
         </div>
     );
