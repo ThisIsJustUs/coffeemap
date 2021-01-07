@@ -78,12 +78,12 @@ export const NavBar: React.FC<NavBarProps> = () => {
                                             Dashboard
                                         </a>
                                     </Link>
-                                    <Link href='/login'>
+                                    <Link href='/auth/login'>
                                         <a className='hover:bg-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
                                             Login
                                         </a>
                                     </Link>
-                                    <Link href='/register'>
+                                    <Link href='/auth/register'>
                                         <a className='hover:bg-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
                                             Register
                                         </a>
@@ -192,12 +192,12 @@ export const NavBar: React.FC<NavBarProps> = () => {
                                 Dashboard
                             </a>
                         </Link>
-                        <Link href='/login'>
+                        <Link href='/auth/login'>
                             <a className='text-gray-700 hover:bg-gray-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
                                 Login
                             </a>
                         </Link>
-                        <Link href='/register'>
+                        <Link href='/auth/register'>
                             <a className='text-gray-700 hover:bg-gray-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
                                 Register
                             </a>

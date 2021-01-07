@@ -89,13 +89,13 @@ router.post(
     }
 );
 
-router.get('/test', (req: Request, res: Response) => {
-    res.send(req.isAuthenticated());
+router.get('/logout', (req: Request, res: Response) => {
+    req.logout();
+    res.send('User logged out');
 });
 
-router.get('/test-cookie', (_req: Request, res: Response) => {
-    res.cookie('hello', 'Cookies');
-    res.send('Hello from cookies');
+router.get('/test', (req: Request, res: Response) => {
+    res.send(req.isAuthenticated());
 });
 
 router.get('/unauthorized', (_req: Request, res: Response) => {

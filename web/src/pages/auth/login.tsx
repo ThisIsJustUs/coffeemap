@@ -3,10 +3,10 @@ import * as Yup from 'yup';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Button } from '@chakra-ui/react';
-import { MyInput } from '../components/MyInput';
+import { MyInput } from '../../components/MyInput';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { NavBar } from '../components/NavBar';
-import { Footer } from '../components/Footer';
+import { NavBar } from '../../components/NavBar';
+import { Footer } from '../../components/Footer';
 
 interface Values {
     email: string;
