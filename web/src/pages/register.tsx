@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { Button } from '@chakra-ui/react';
 import { MyInput } from '../components/MyInput';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { NavBar } from '../components/NavBar';
+import { Footer } from '../components/Footer';
 
 interface Values {
     email: string;
@@ -34,79 +36,85 @@ export default function IndexPage() {
             <Head>
                 <title>Register | Coffeemap</title>
             </Head>
-            <div className='flex justify-center'>
-                <div className='w-1/3 m-7'>
-                    <Formik
-                        initialValues={{
-                            email: '',
-                            password: '',
-                            password2: '',
-                        }}
-                        validationSchema={LoginSchema}
-                        onSubmit={async (values, actions) => {
-                            // Get data from from
-                            const data = JSON.stringify({
-                                email: values.email,
-                                password: values.password,
-                            });
+            <div className='flex flex-col justify-between h-screen'>
+                <NavBar activePage='Dashboard' />
+                <div className='flex justify-center'>
+                    <div className='w-3/4 md:max-w-md m-7'>
+                        <Formik
+                            initialValues={{
+                                email: '',
+                                password: '',
+                                password2: '',
+                            }}
+                            validationSchema={LoginSchema}
+                            onSubmit={async (values, actions) => {
+                                // Get data from from
+                                const data = JSON.stringify({
+                                    email: values.email,
+                                    password: values.password,
+                                });
 
-                            // POST Config
-                            const config: AxiosRequestConfig = {
-                                method: 'post',
-                                url: 'http://localhost:4000/auth/register',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                data: data,
-                            };
+                                // POST Config
+                                const config: AxiosRequestConfig = {
+                                    method: 'post',
+                                    url: 'http://localhost:4000/auth/register',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    data: data,
+                                };
 
-                            try {
-                                actions.setSubmitting(true);
-                                const res: AxiosResponse = await axios(config);
-                                if (res.status == 200) {
-                                    actions.setSubmitting(false);
-                                    router.push('/');
-                                } else {
-                                    actions.setSubmitting(false);
+                                try {
+                                    actions.setSubmitting(true);
+                                    const res: AxiosResponse = await axios(
+                                        config
+                                    );
+                                    if (res.status == 200) {
+                                        actions.setSubmitting(false);
+                                        router.push('/login');
+                                    } else {
+                                        actions.setSubmitting(false);
+                                    }
+                                } catch (error) {
+                                    console.log(error);
                                 }
-                            } catch (error) {
-                                console.log(error);
-                            }
-                        }}
-                    >
-                        {(props: FormikProps<Values>) => {
-                            return (
-                                <Form>
-                                    <MyInput
-                                        label='Email'
-                                        name='email'
-                                        type='email'
-                                        placeholder='justus@example.com'
-                                    />
-                                    <MyInput
-                                        label='Password'
-                                        name='password'
-                                        type='password'
-                                        placeholder='••••••••••••'
-                                    />
-                                    <MyInput
-                                        label='Confirm Password'
-                                        name='password2'
-                                        type='password'
-                                        placeholder='••••••••••••'
-                                    />
-                                    <Button
-                                        type='submit'
-                                        isLoading={props.isSubmitting}
-                                        className='bg-green-500 text-white px-5 py-2 rounded-md text-base'
-                                    >
-                                        Submit
-                                    </Button>
-                                </Form>
-                            );
-                        }}
-                    </Formik>
+                            }}
+                        >
+                            {(props: FormikProps<Values>) => {
+                                return (
+                                    <Form>
+                                        <MyInput
+                                            label='Email'
+                                            name='email'
+                                            type='email'
+                                            placeholder='justus@example.com'
+                                        />
+                                        <MyInput
+                                            label='Password'
+                                            name='password'
+                                            type='password'
+                                            placeholder='••••••••••••'
+                                        />
+                                        <MyInput
+                                            label='Confirm Password'
+                                            name='password2'
+                                            type='password'
+                                            placeholder='••••••••••••'
+                                        />
+                                        <Button
+                                            type='submit'
+                                            isLoading={props.isSubmitting}
+                                            className='bg-green-500 text-white px-5 py-2 rounded-md text-base'
+                                        >
+                                            Submit
+                                        </Button>
+                                    </Form>
+                                );
+                            }}
+                        </Formik>
+                    </div>
                 </div>
+                <Footer />
             </div>
         </>
     );

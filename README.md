@@ -1,7 +1,3 @@
-# Awesome Project Build with TypeORM
+# Coffeemap
 
-Steps to run this project:
-
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `npm start` command
+Coffeemap enables small independent coffee wagon owners to reach out to customers and get found. Modern map services or store review sites do not include the mobile coffeeshop giving business owners an unfair disadvantage.
