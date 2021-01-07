@@ -3,8 +3,8 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
     purge: [
-        './components/**/*.{js,ts,jsx,tsx}',
-        './pages/**/*.{js,ts,jsx,tsx}',
+        './src/components/**/*.{js,ts,jsx,tsx}',
+        './src/pages/**/*.{js,ts,jsx,tsx}',
     ],
     theme: {
         colors: {
@@ -19,11 +19,6 @@ module.exports = {
         fontFamily: {
             serif: ['PT Serif', ...defaultTheme.fontFamily.sans],
             sans: ['Helvetica Neue', ...defaultTheme.fontFamily.serif],
-        },
-        extend: {
-            colors: {
-                'accent-1': '#333',
-            },
         },
     },
     variants: {
