@@ -54,11 +54,13 @@ export const NavBar: React.FC<NavBarProps> = () => {
                         </div>
                         <div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
                             <div className='flex-shrink-0 flex items-center'>
-                                <img
-                                    className='block lg:hidden h-8 w-auto'
-                                    src='https://coffeemap-resources.s3.eu-central-1.amazonaws.com/Logo.svg'
-                                    alt='Coffeemap'
-                                />
+                                <Link href='/'>
+                                    <img
+                                        className='block lg:hidden h-8 w-auto'
+                                        src='https://coffeemap-resources.s3.eu-central-1.amazonaws.com/Logo.svg'
+                                        alt='Coffeemap'
+                                    />
+                                </Link>
                                 <Link href='/'>
                                     <a>
                                         <img
