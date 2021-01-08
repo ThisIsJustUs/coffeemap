@@ -9,6 +9,9 @@ import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
 
 interface Values {
+    firstName: string;
+    lastName: string;
+    role: string;
     email: string;
     password: string;
     password2: string;
@@ -37,13 +40,14 @@ export default function IndexPage() {
                 <title>Register | Coffeemap</title>
             </Head>
             <div className='flex flex-col justify-between h-screen'>
-                <div>
-                    <NavBar />
-                </div>
+                <NavBar />
                 <div className='flex justify-center'>
-                    <div className='w-3/4 md:max-w-md m-7'>
+                    <div className='w-3/4 md:max-w-md m-7 py-16'>
                         <Formik
                             initialValues={{
+                                firstName: '',
+                                lastName: '',
+                                role: '',
                                 email: '',
                                 password: '',
                                 password2: '',
@@ -52,8 +56,7 @@ export default function IndexPage() {
                             onSubmit={async (values, actions) => {
                                 // Get data from from
                                 const data = JSON.stringify({
-                                    email: values.email,
-                                    password: values.password,
+                                    ...values,
                                 });
 
                                 // POST Config
@@ -73,7 +76,7 @@ export default function IndexPage() {
                                     );
                                     if (res.status == 200) {
                                         actions.setSubmitting(false);
-                                        router.push('/login');
+                                        router.push('/');
                                     } else {
                                         actions.setSubmitting(false);
                                     }
@@ -85,6 +88,26 @@ export default function IndexPage() {
                             {(props: FormikProps<Values>) => {
                                 return (
                                     <Form>
+                                        <div className='md:flex justify-between'>
+                                            <MyInput
+                                                label='Firstname'
+                                                name='firstName'
+                                                type='text'
+                                                placeholder='Justus'
+                                            />
+                                            <MyInput
+                                                label='Lastname'
+                                                name='lastName'
+                                                type='text'
+                                                placeholder='Hebenstreit'
+                                            />
+                                        </div>
+                                        <MyInput
+                                            label='Role'
+                                            name='role'
+                                            type='text'
+                                            placeholder='Customer'
+                                        />
                                         <MyInput
                                             label='Email'
                                             name='email'
