@@ -1,8 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Shop } from './Shop';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity({ name: 'User' })
-export class User {
+export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,12 +11,12 @@ export class User {
     @Column()
     lastName: string;
 
+    @Column({ unique: true })
+    email: string;
+
     @Column()
-    company: string;
+    password: string;
 
-    @Column({ nullable: true })
+    @Column()
     role: string;
-
-    @OneToMany(() => Shop, (shop) => shop.user)
-    shops: Shop[];
 }

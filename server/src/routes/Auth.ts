@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { getRepository } from 'typeorm';
-import { Auth as authEntitiy } from '../entity/Auth';
+import { User } from '../entity/User';
 import passportLocal from 'passport-local';
 import passport from 'passport';
 
@@ -23,7 +23,7 @@ const PassportConfiguration = () => {
             },
             async (email, password, done) => {
                 // Find user by email
-                const authRepository = getRepository(authEntitiy);
+                const authRepository = getRepository(User);
                 const user: any = await authRepository.findOne({
                     email: email,
                 });
@@ -55,28 +55,41 @@ const PassportConfiguration = () => {
     // In deserializeUser that key is matched with the in memory array / database or any data resource.
     // The fetched object is attached to the request object as req.user
     passport.deserializeUser((id: number, done) => {
-        const authRepository = getRepository(authEntitiy);
-        const user = authRepository.findOne(id);
+        const userRepository = getRepository(User);
+        const user = userRepository.findOne(id);
         return done(null, user);
     });
 };
 
 //  Register User
 router.post('/register', async (req: Request, res: Response) => {
-    // // Extract email and password from request
-    const { email, password } = req.body;
+    // Extract Values from Req Body
+    const { firstName, lastName, role, email, password } = req.body;
+
+    // Hash Password
     const hash = await bcrypt.hash(password, 12);
 
-    // Create new user account
-    const authRepository = getRepository(authEntitiy);
-    const auth = authRepository.create({
-        email: email,
-        password: hash,
-    });
+    try {
+        // Create new user account
+        const userRepository = getRepository(User);
+        const user = userRepository.create({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: hash,
+            role: role,
+        });
 
-    // Save new account
-    const results = await authRepository.save(auth);
-    res.send(results);
+        // Save new user
+        const result = await userRepository.save(user);
+
+        if (result) {
+            res.send({ email: req.body.email, message: 'User Created' });
+        }
+    } catch (error) {
+        res.status(500).send({ message: error.message, detail: error.detail });
+        console.log(error);
+    }
 });
 
 // Login User
@@ -85,17 +98,12 @@ router.post(
     passport.authenticate('local'),
     (req: Request, res: Response) => {
         res.send(req.user);
-        console.log(req.isAuthenticated());
     }
 );
 
 router.get('/logout', (req: Request, res: Response) => {
     req.logout();
     res.send('User logged out');
-});
-
-router.get('/test', (req: Request, res: Response) => {
-    res.send(req.isAuthenticated());
 });
 
 router.get('/unauthorized', (_req: Request, res: Response) => {
