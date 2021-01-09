@@ -6,7 +6,7 @@ import {
     getShopById,
     updateShop,
 } from '../controllers/Shops';
-import isLoggedIn from '../middleware/isLoggedIn';
+import { isLoggedIn } from '../middleware/isLoggedIn';
 
 const router = express.Router();
 

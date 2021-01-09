@@ -1,21 +1,24 @@
 import express from 'express';
-import isLoggedIn from '../middleware/isLoggedIn';
 import {
-    getAllUsers,
     getUsersById,
-    createUser,
     updateUser,
     deleteUser,
+    getAllUsers,
 } from '../controllers/Users';
+import { isLoggedIn } from '../middleware/isLoggedIn';
 
 const router = express.Router();
 
-// All /users routes are protected by authentication
 router.use(isLoggedIn);
+
+/*
+    User routes
+
+    Create Route is under /auth
+*/
 
 router.get('/', getAllUsers);
 router.get('/:id', getUsersById);
-router.post('/', createUser);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 
