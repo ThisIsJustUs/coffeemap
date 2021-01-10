@@ -1,6 +1,8 @@
+import 'dotenv-safe/config';
 import express from 'express';
 import cors from 'cors';
 import { createConnection, getRepository } from 'typeorm';
+import { COOKIE_NAME, __prod__ } from './constants';
 import session from 'express-session';
 import passport from 'passport';
 import path from 'path';
@@ -10,46 +12,55 @@ import Redis from 'ioredis';
 import connectRedis from 'connect-redis';
 import 'reflect-metadata';
 import passportLocal from 'passport-local';
-import { User } from './entity/User';
-import { Shop } from './entity/Shop';
+import { User } from './entities/User';
+import { Shop } from './entities/Shop';
 import { router as authRoutes } from './routes/Auth';
 import { router as userRoutes } from './routes/User';
 import { router as shopRoutes } from './routes/Shops';
 
 const main = async () => {
-    await createConnection({
+    const conn = await createConnection({
         type: 'postgres',
-        host: process.env.DB_HOST,
-        port: 5432,
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE,
+        url: process.env.DATABASE_URL,
         logging: true,
         synchronize: true,
         migrations: [path.join(__dirname, './migrations/*')],
         entities: [User, Shop],
     });
 
+    await conn.runMigrations();
+
     // create and setup express app
     const app = express();
     const RedisStore = connectRedis(session);
     const redis = new Redis(process.env.REDIS_URL);
 
-    app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+    app.set('proxy', 1);
+
+    app.use(
+        cors({
+            origin: process.env.CORS_ORIGIN,
+            credentials: true,
+        })
+    );
     app.use(express.json());
     app.use(cookieParser());
     app.use(
         session({
-            name: 'sid',
+            name: COOKIE_NAME,
             store: new RedisStore({
                 client: redis,
                 disableTouch: true,
             }),
-            secret: 'somesecret',
+            secret: process.env.SESSION_SECRET,
             resave: false,
             saveUninitialized: false,
             cookie: {
                 maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
+                httpOnly: true,
+                sameSite: 'lax', // csrf
+                secure: __prod__, // cookie only works in https
+                domain: __prod__ ? '.vercel.app' : undefined,
             },
         })
     );
@@ -116,7 +127,9 @@ const main = async () => {
     app.use('/shops', shopRoutes);
 
     // start express server
-    app.listen(4000);
+    app.listen(parseInt(process.env.PORT), () => {
+        console.log('server started on localhost:4000');
+    });
 };
 
 main().catch((err) => {

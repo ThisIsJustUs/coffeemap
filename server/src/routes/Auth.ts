@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { getRepository } from 'typeorm';
-import { User } from '../entity/User';
+import { User } from '../entities/User';
 import passport from 'passport';
 
 const router = express.Router();

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { Shop } from '../entity/Shop';
+import { Shop } from '../entities/Shop';
 
 const getAllShops = async (_req: Request, res: Response) => {
     const shops = await getRepository(Shop).find();
