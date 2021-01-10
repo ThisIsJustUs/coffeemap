@@ -46,6 +46,7 @@ export const NavBar: React.FC = () => {
         };
 
         const getMe = async () => {
+            console.log(process.env.VERCEL_GITHUB_COMMIT_REF);
             const result: AxiosResponse = await axios(config);
             console.log(result);
             setLoggedIn(result.data);
