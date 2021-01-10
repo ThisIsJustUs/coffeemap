@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import { Transition } from '@headlessui/react';
+import { API_URL } from '../constants';
 
 export const NavBar: React.FC = () => {
     // User Props
@@ -38,7 +39,7 @@ export const NavBar: React.FC = () => {
         // GET User Config
         const config: AxiosRequestConfig = {
             method: 'get',
-            url: `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
+            url: `${API_URL}/auth/me`,
             headers: {
                 'Content-Type': 'application/json',
             },
