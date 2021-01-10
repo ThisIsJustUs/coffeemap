@@ -60,6 +60,7 @@ const main = async () => {
                 httpOnly: true,
                 sameSite: 'lax', // csrf
                 secure: __prod__, // cookie only works in https
+                domain: __prod__ ? '.coffeemap.co.uk' : undefined,
             },
         })
     );
