@@ -62,7 +62,7 @@ export default function IndexPage() {
                                 // POST Config
                                 const config: AxiosRequestConfig = {
                                     method: 'post',
-                                    url: 'http://localhost:4000/auth/register',
+                                    url: `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
                                     headers: {
                                         'Content-Type': 'application/json',
                                     },

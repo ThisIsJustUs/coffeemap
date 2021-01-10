@@ -23,7 +23,7 @@ export const NavBar: React.FC = () => {
     const logout = async () => {
         const config: AxiosRequestConfig = {
             method: 'get',
-            url: 'http://localhost:4000/auth/logout',
+            url: `${process.env.API}/auth/logout`,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -34,10 +34,11 @@ export const NavBar: React.FC = () => {
     };
 
     useEffect(() => {
+        console.log(process.env.NEXT_PUBLIC_API_URL);
         // GET User Config
         const config: AxiosRequestConfig = {
             method: 'get',
-            url: 'http://localhost:4000/auth/me',
+            url: `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
             headers: {
                 'Content-Type': 'application/json',
             },
