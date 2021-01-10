@@ -9,3 +9,5 @@ ormconfig.json
 .DS_Store
 .env
 .env.production
+.env.development
+Dockerfile
