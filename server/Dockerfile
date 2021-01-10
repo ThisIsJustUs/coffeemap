@@ -1,5 +1,8 @@
 FROM node:12
 
+# Define Git Branch
+ARG env_file
+
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -12,10 +15,14 @@ RUN npm install
 
 # Bundle app source
 COPY . .
-COPY .env.production .env
 
+# Define .env based on git branch
+COPY ${env_file} .env
+
+# Build app
 RUN npm run build
 
+# Set environmental variable
 ENV NODE_ENV production
 
 EXPOSE 8080

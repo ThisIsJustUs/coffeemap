@@ -23,7 +23,7 @@ export const NavBar: React.FC = () => {
     const logout = async () => {
         const config: AxiosRequestConfig = {
             method: 'get',
-            url: `${process.env.API}/auth/logout`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
             headers: {
                 'Content-Type': 'application/json',
             },

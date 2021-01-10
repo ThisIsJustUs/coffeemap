@@ -32,6 +32,7 @@ const LoginSchema = Yup.object().shape({
 
 export default function IndexPage() {
     // Set up router
+    // for router.push()
     const router = useRouter();
 
     return (
