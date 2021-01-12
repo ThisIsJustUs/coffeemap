@@ -35,7 +35,7 @@ export default function IndexPage() {
                 <div>
                     <NavBar />
                 </div>
-                {/* <div className='flex justify-center'>
+                <div className='flex justify-center'>
                     <div className='w-3/4 md:max-w-md m-7'>
                         <Formik
                             initialValues={{ email: '', password: '' }}
@@ -102,7 +102,7 @@ export default function IndexPage() {
                         </Formik>
                     </div>
                 </div>
-                <Footer /> */}
+                <Footer />
             </div>
         </>
     );
