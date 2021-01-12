@@ -34,236 +34,317 @@ export const NavBar: React.FC = () => {
         router.push('/auth/login');
     };
 
-    useEffect(() => {
-        // GET User Config
-        const config: AxiosRequestConfig = {
-            method: 'get',
-            url: `${API_URL}/auth/me`,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            withCredentials: true,
-        };
+    // useEffect(() => {
+    //     // GET User Config
+    //     const config: AxiosRequestConfig = {
+    //         method: 'get',
+    //         url: `${API_URL}/auth/me`,
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         withCredentials: true,
+    //     };
 
-        const getMe = async () => {
-            console.log(process.env.VERCEL_GITHUB_COMMIT_REF);
-            const result: AxiosResponse = await axios(config);
-            console.log(result);
-            setLoggedIn(result.data);
-        };
+    //     const getMe = async () => {
+    //         console.log(process.env.VERCEL_GITHUB_COMMIT_REF);
+    //         const result: AxiosResponse = await axios(config);
+    //         console.log(result);
+    //         setLoggedIn(result.data);
+    //     };
 
-        getMe();
-    }, []);
-
-    let body = null;
-
-    if (!isLoggedIn) {
-        body = (
-            <div className='flex font-serif'>
-                <Link href='/auth/login'>
-                    <a className='md:mr-5'>Login</a>
-                </Link>
-                <Link href='/auth/register'>
-                    <a>Register</a>
-                </Link>
-            </div>
-        );
-    } else {
-        body = (
-            <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
-                <button className='bg-gray-50 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
-                    <span className='sr-only'>View notifications</span>
-
-                    <svg
-                        className='h-6 w-6'
-                        xmlns='http://www.w3.org/2000/svg'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        stroke='currentColor'
-                        aria-hidden='true'
-                    >
-                        <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            strokeWidth='2'
-                            d='M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9'
-                        />
-                    </svg>
-                </button>
-
-                <div className='ml-3 relative'>
-                    <div>
-                        <button
-                            className='bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
-                            id='user-menu'
-                            aria-haspopup='true'
-                            onClick={() => setIsProfileOpen(!isProfileOpen)}
-                        >
-                            <span className='sr-only'>Open user menu</span>
-                            <img
-                                className='h-8 w-8 rounded-full'
-                                src={isLoggedIn.image}
-                                alt=''
-                            />
-                        </button>
-                    </div>
-                    {/* 
-                                Profile dropdown panel, show/hide based on dropdown state.
-                                Entering: "transition ease-out duration-100"
-                                    From: "transform opacity-0 scale-95"
-                                    To: "transform opacity-100 scale-100"
-                                Leaving: "transition ease-in duration-75"
-                                    From: "transform opacity-100 scale-100"
-                                    To: "transform opacity-0 scale-95"
-                            */}
-                    <Transition
-                        show={isProfileOpen}
-                        enter='transition ease-out duration-100'
-                        enterFrom='opacity-0 scale-95'
-                        enterTo='opacity-100 scale-100'
-                        leave='transition ease-in duration-75'
-                        leaveFrom='opacity-100 scale-100'
-                        leaveTo='opacity-0 scale-95'
-                    >
-                        <div
-                            className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5`}
-                            role='menu'
-                            aria-orientation='vertical'
-                            aria-labelledby='user-menu'
-                        >
-                            <Link href='/profile'>
-                                <a
-                                    className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-                                    role='menuitem'
-                                >
-                                    Your Profile
-                                </a>
-                            </Link>
-                            <a
-                                onClick={logout}
-                                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer'
-                                role='menuitem'
-                            >
-                                Sign out
-                            </a>
-                        </div>
-                    </Transition>
-                </div>
-            </div>
-        );
-    }
+    //     getMe();
+    // }, []);
 
     return (
-        <div className='fixed w-full'>
-            <nav className='bg-gray-50 shadow-md'>
-                <div className='max-w-7xl mx-auto px-2 sm:px-6 lg:px-8'>
-                    <div className='relative flex items-center justify-between h-16'>
-                        <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
-                            {/* Mobile Menu Button */}
-                            <button
-                                className='inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
-                                aria-expanded='false'
-                                onClick={() => setIsOpen(!isOpen)}
-                            >
-                                <span className='sr-only'>Open main menu</span>
-                                <svg
-                                    className='block h-6 w-6'
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    fill='none'
-                                    viewBox='0 0 24 24'
-                                    stroke='currentColor'
-                                    aria-hidden='true'
-                                >
-                                    <path
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                        strokeWidth='2'
-                                        d='M4 6h16M4 12h16M4 18h16'
-                                    />
-                                </svg>
-                                <svg
-                                    className='hidden h-6 w-6'
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    fill='none'
-                                    viewBox='0 0 24 24'
-                                    stroke='currentColor'
-                                    aria-hidden='true'
-                                >
-                                    <path
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                        strokeWidth='2'
-                                        d='M6 18L18 6M6 6l12 12'
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                        <div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
-                            <div className='flex-shrink-0 flex items-center'>
-                                <Link href='/'>
-                                    <img
-                                        className='block lg:hidden h-8 w-auto'
-                                        src='https://coffeemap-resources.s3.eu-central-1.amazonaws.com/Logo.svg'
-                                        alt='Coffeemap'
-                                    />
-                                </Link>
-                                <Link href='/'>
-                                    <a>
-                                        <img
-                                            className='hidden lg:block h-8 w-auto'
-                                            src='https://coffeemap-resources.s3.eu-central-1.amazonaws.com/Brand.svg'
-                                            alt='Coffeemap'
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className='hidden sm:block sm:ml-6 font-serif'>
-                                <div className='flex space-x-4'>
-                                    <Link href='/overview'>
-                                        <a className='bg-gray-100 px-3 py-2 rounded-md text-sm font-medium'>
-                                            Dashboard
-                                        </a>
-                                    </Link>
-                                    <Link href='/auth/login'>
-                                        <a className='hover:bg-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
-                                            Login
-                                        </a>
-                                    </Link>
-                                    <Link href='/auth/register'>
-                                        <a className='hover:bg-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
-                                            Register
-                                        </a>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                        {body}
-                    </div>
+        // <!-- This example require Tailwind CSS v2.0+ -->
+        <div className='relative bg-white'>
+            <div className='flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10'>
+                <div>
+                    <a href='#' className='flex'>
+                        <span className='sr-only'>Workflow</span>
+                        <img
+                            className='w-auto h-8 sm:h-10'
+                            src='https://coffeemap-resources.s3.eu-central-1.amazonaws.com/Logo.svg'
+                            alt=''
+                        />
+                    </a>
                 </div>
-                {/* 
-                Mobile menu, toggle classes based on menu state.
-                Menu open: "block", Menu closed: "hidden" 
-             */}
-                <div className={`${isOpen ? 'block' : 'hidden'} sm:hidden`}>
-                    <div className='px-2 pt-2 pb-3 space-y-1 font-serif'>
-                        <Link href='/overview'>
-                            <a className='bg-gray-100 block px-3 py-2 rounded-md text-base font-medium'>
-                                Dashboard
-                            </a>
-                        </Link>
+                <div className='-mr-2 -my-2 md:hidden'>
+                    <button
+                        type='button'
+                        className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <span className='sr-only'>Open menu</span>
+                        {/* <!-- Heroicon name: menu --> */}
+                        <svg
+                            className='h-6 w-6'
+                            xmlns='http://www.w3.org/2000/svg'
+                            fill='none'
+                            viewBox='0 0 24 24'
+                            stroke='currentColor'
+                            aria-hidden='true'
+                        >
+                            <path
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                                strokeWidth='2'
+                                d='M4 6h16M4 12h16M4 18h16'
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <div className='hidden md:flex-1 md:flex md:items-center md:justify-between'>
+                    <nav className='flex space-x-10'>
+                        <a
+                            href='#'
+                            className='text-base font-medium text-gray-500 hover:text-gray-900'
+                        >
+                            Solution
+                        </a>
+                        <a
+                            href='#'
+                            className='text-base font-medium text-gray-500 hover:text-gray-900'
+                        >
+                            Docs
+                        </a>
+                        <a
+                            href='#'
+                            className='text-base font-medium text-gray-500 hover:text-gray-900'
+                        >
+                            Docs
+                        </a>
+                    </nav>
+                    <div className='flex items-center md:ml-12'>
                         <Link href='/auth/login'>
-                            <a className='text-gray-700 hover:bg-gray-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
-                                Login
+                            <a
+                                href='#'
+                                className='text-base font-medium text-gray-500 hover:text-gray-900'
+                            >
+                                Sign in
                             </a>
                         </Link>
                         <Link href='/auth/register'>
-                            <a className='text-gray-700 hover:bg-gray-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
-                                Register
+                            <a
+                                href='#'
+                                className='ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700'
+                            >
+                                Sign up
                             </a>
                         </Link>
                     </div>
                 </div>
-            </nav>
+            </div>
+
+            {/* <!--
+    Mobile menu, show/hide based on mobile menu state.
+
+    Entering: "duration-200 ease-out"
+      From: "opacity-0 scale-95"
+      To: "opacity-100 scale-100"
+    Leaving: "duration-100 ease-in"
+      From: "opacity-100 scale-100"
+      To: "opacity-0 scale-95"
+  --> */}
+            <Transition
+                show={isOpen}
+                enter='duration-200 ease-out'
+                enterFrom='opacity-0 scale-95'
+                enterTo='opacity-100 scale-100'
+                leave='duration-100 ease-in'
+                leaveFrom='opacity-100 scale-100'
+                leaveTo='opacity-0 scale-95'
+            >
+                <div className='absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden'>
+                    <div className='rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50'>
+                        <div className='pt-5 pb-6 px-5'>
+                            <div className='flex items-center justify-between'>
+                                <div>
+                                    <img
+                                        className='h-8 w-auto'
+                                        src='https://coffeemap-resources.s3.eu-central-1.amazonaws.com/Logo.svg'
+                                        alt='Workflow'
+                                    />
+                                </div>
+                                <div className='-mr-2'>
+                                    <button
+                                        type='button'
+                                        className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'
+                                        onClick={() => setIsOpen(!isOpen)}
+                                    >
+                                        <span className='sr-only'>
+                                            Close menu
+                                        </span>
+                                        {/* Heroicon name: x */}
+                                        <svg
+                                            className='h-6 w-6'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            fill='none'
+                                            viewBox='0 0 24 24'
+                                            stroke='currentColor'
+                                            aria-hidden='true'
+                                        >
+                                            <path
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                                strokeWidth={2}
+                                                d='M6 18L18 6M6 6l12 12'
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className='mt-6'>
+                                <nav className='grid gap-y-8'>
+                                    <a
+                                        href='#'
+                                        className='-m-3 p-3 flex items-center rounded-md hover:bg-gray-50'
+                                    >
+                                        {/* Heroicon name: chart-bar */}
+                                        <svg
+                                            className='flex-shrink-0 h-6 w-6 text-indigo-600'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            fill='none'
+                                            viewBox='0 0 24 24'
+                                            stroke='currentColor'
+                                            aria-hidden='true'
+                                        >
+                                            <path
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                                strokeWidth={2}
+                                                d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
+                                            />
+                                        </svg>
+                                        <span className='ml-3 text-base font-medium text-gray-900'>
+                                            Analytics
+                                        </span>
+                                    </a>
+                                    <a
+                                        href='#'
+                                        className='-m-3 p-3 flex items-center rounded-md hover:bg-gray-50'
+                                    >
+                                        {/* Heroicon name: cursor-click */}
+                                        <svg
+                                            className='flex-shrink-0 h-6 w-6 text-indigo-600'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            fill='none'
+                                            viewBox='0 0 24 24'
+                                            stroke='currentColor'
+                                            aria-hidden='true'
+                                        >
+                                            <path
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                                strokeWidth={2}
+                                                d='M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122'
+                                            />
+                                        </svg>
+                                        <span className='ml-3 text-base font-medium text-gray-900'>
+                                            Engagement
+                                        </span>
+                                    </a>
+                                    <a
+                                        href='#'
+                                        className='-m-3 p-3 flex items-center rounded-md hover:bg-gray-50'
+                                    >
+                                        {/* Heroicon name: shield-check */}
+                                        <svg
+                                            className='flex-shrink-0 h-6 w-6 text-indigo-600'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            fill='none'
+                                            viewBox='0 0 24 24'
+                                            stroke='currentColor'
+                                            aria-hidden='true'
+                                        >
+                                            <path
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                                strokeWidth={2}
+                                                d='M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'
+                                            />
+                                        </svg>
+                                        <span className='ml-3 text-base font-medium text-gray-900'>
+                                            Security
+                                        </span>
+                                    </a>
+                                    <a
+                                        href='#'
+                                        className='-m-3 p-3 flex items-center rounded-md hover:bg-gray-50'
+                                    >
+                                        {/* Heroicon name: view-grid */}
+                                        <svg
+                                            className='flex-shrink-0 h-6 w-6 text-indigo-600'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            fill='none'
+                                            viewBox='0 0 24 24'
+                                            stroke='currentColor'
+                                            aria-hidden='true'
+                                        >
+                                            <path
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                                strokeWidth={2}
+                                                d='M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z'
+                                            />
+                                        </svg>
+                                        <span className='ml-3 text-base font-medium text-gray-900'>
+                                            Integrations
+                                        </span>
+                                    </a>
+                                    <a
+                                        href='#'
+                                        className='-m-3 p-3 flex items-center rounded-md hover:bg-gray-50'
+                                    >
+                                        {/* Heroicon name: refresh */}
+                                        <svg
+                                            className='flex-shrink-0 h-6 w-6 text-indigo-600'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            fill='none'
+                                            viewBox='0 0 24 24'
+                                            stroke='currentColor'
+                                            aria-hidden='true'
+                                        >
+                                            <path
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                                strokeWidth={2}
+                                                d='M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'
+                                            />
+                                        </svg>
+                                        <span className='ml-3 text-base font-medium text-gray-900'>
+                                            Automations
+                                        </span>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                        <div className='py-6 px-5 space-y-6'>
+                            <div>
+                                <Link href='/auth/register'>
+                                    <a
+                                        href='#'
+                                        className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700'
+                                    >
+                                        Sign up
+                                    </a>
+                                </Link>
+                                <p className='mt-6 text-center text-base font-medium text-gray-500'>
+                                    Existing customer?{' '}
+                                    <Link href='/auth/login'>
+                                        <a
+                                            href='#'
+                                            className='text-indigo-600 hover:text-indigo-500'
+                                        >
+                                            Sign in
+                                        </a>
+                                    </Link>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Transition>
         </div>
     );
 };
