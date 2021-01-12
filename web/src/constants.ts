@@ -1,6 +1,4 @@
-const API_URL =
+export const API_URL =
     process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF === 'master'
         ? process.env.NEXT_PUBLIC_API_URL
-        : process.env.NEXT_STAGING_PUBLIC_API_URL;
-
-export { API_URL };
+        : process.env.NEXT_PUBLIC_DEV_API_URL;
