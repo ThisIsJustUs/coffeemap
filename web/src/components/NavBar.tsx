@@ -34,26 +34,11 @@ export const NavBar: React.FC = () => {
         router.push('/auth/login');
     };
 
-    // useEffect(() => {
-    //     // GET User Config
-    //     const config: AxiosRequestConfig = {
-    //         method: 'get',
-    //         url: `${API_URL}/auth/me`,
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         withCredentials: true,
-    //     };
-
-    //     const getMe = async () => {
-    //         console.log(process.env.VERCEL_GITHUB_COMMIT_REF);
-    //         const result: AxiosResponse = await axios(config);
-    //         console.log(result);
-    //         setLoggedIn(result.data);
-    //     };
-
-    //     getMe();
-    // }, []);
+    useEffect(() => {
+        console.log('Git', process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF);
+        console.log('Git', process.env.NEXT_STAGING_PUBLIC_API_URL);
+        console.log('Git', process.env.NEXT_PUBLIC_API_URL);
+    }, []);
 
     return (
         // <!-- This example require Tailwind CSS v2.0+ -->
