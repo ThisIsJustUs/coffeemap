@@ -18,7 +18,6 @@ export const NavBar: React.FC = () => {
 
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
-    const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isLoggedIn, setLoggedIn] = useState<UserNode | null>(null);
 
     const logout = async () => {
@@ -34,26 +33,132 @@ export const NavBar: React.FC = () => {
         router.push('/auth/login');
     };
 
-    // useEffect(() => {
-    //     // GET User Config
-    //     const config: AxiosRequestConfig = {
-    //         method: 'get',
-    //         url: `${API_URL}/auth/me`,
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         withCredentials: true,
-    //     };
+    useEffect(() => {
+        // GET User Config
+        const config: AxiosRequestConfig = {
+            method: 'get',
+            url: `${API_URL}/auth/me`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+        };
 
-    //     const getMe = async () => {
-    //         console.log(process.env.VERCEL_GITHUB_COMMIT_REF);
-    //         const result: AxiosResponse = await axios(config);
-    //         console.log(result);
-    //         setLoggedIn(result.data);
-    //     };
+        const getMe = async () => {
+            console.log(process.env.VERCEL_GITHUB_COMMIT_REF);
+            const result: AxiosResponse = await axios(config);
+            console.log(result);
+            setLoggedIn(result.data);
+        };
 
-    //     getMe();
-    // }, []);
+        getMe();
+    }, []);
+
+    let body = null;
+
+    if (!isLoggedIn) {
+        // Not logged in content
+        body = (
+            <div>
+                <div className='md:hidden'>
+                    <div className='py-6 px-5 space-y-6'>
+                        <div>
+                            <Link href='/auth/register'>
+                                <a
+                                    href='#'
+                                    className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700'
+                                >
+                                    Sign up
+                                </a>
+                            </Link>
+                            <p className='mt-6 text-center text-base font-medium text-gray-500'>
+                                Existing customer?{' '}
+                                <Link href='/auth/login'>
+                                    <a
+                                        href='#'
+                                        className='text-indigo-600 hover:text-indigo-500'
+                                    >
+                                        Sign in
+                                    </a>
+                                </Link>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className='hidden md:block'>
+                    <div className='flex items-center md:ml-12'>
+                        <Link href='/auth/login'>
+                            <a
+                                href='#'
+                                className='text-base font-medium text-gray-500 hover:text-gray-900'
+                            >
+                                Sign in
+                            </a>
+                        </Link>
+                        <Link href='/auth/register'>
+                            <a
+                                href='#'
+                                className='ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700'
+                            >
+                                Sign up
+                            </a>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    } else {
+        // Not logged in content
+        body = (
+            <div>
+                <div className='md:hidden'>
+                    <div className='py-6 px-5 space-y-6'>
+                        <div>
+                            <Link href='/auth/register'>
+                                <a
+                                    href='#'
+                                    className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700'
+                                >
+                                    Sign up
+                                </a>
+                            </Link>
+                            <p className='mt-6 text-center text-base font-medium text-gray-500'>
+                                Existing customer?{' '}
+                                <Link href='/auth/login'>
+                                    <a
+                                        href='#'
+                                        className='text-indigo-600 hover:text-indigo-500'
+                                    >
+                                        Sign in
+                                    </a>
+                                </Link>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className='hidden md:block'>
+                    <div className='flex items-center md:ml-12'>
+                        <Link href='/auth/login'>
+                            <a
+                                href='#'
+                                className='text-base font-medium text-gray-500 hover:text-gray-900'
+                            >
+                                Sign in
+                            </a>
+                        </Link>
+                        <Link href='/auth/register'>
+                            <a
+                                href='#'
+                                className='ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700'
+                            >
+                                Sign up
+                            </a>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         // <!-- This example require Tailwind CSS v2.0+ -->
@@ -115,24 +220,7 @@ export const NavBar: React.FC = () => {
                             Docs
                         </a>
                     </nav>
-                    <div className='flex items-center md:ml-12'>
-                        <Link href='/auth/login'>
-                            <a
-                                href='#'
-                                className='text-base font-medium text-gray-500 hover:text-gray-900'
-                            >
-                                Sign in
-                            </a>
-                        </Link>
-                        <Link href='/auth/register'>
-                            <a
-                                href='#'
-                                className='ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700'
-                            >
-                                Sign up
-                            </a>
-                        </Link>
-                    </div>
+                    {body}
                 </div>
             </div>
 
@@ -319,29 +407,7 @@ export const NavBar: React.FC = () => {
                                 </nav>
                             </div>
                         </div>
-                        <div className='py-6 px-5 space-y-6'>
-                            <div>
-                                <Link href='/auth/register'>
-                                    <a
-                                        href='#'
-                                        className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700'
-                                    >
-                                        Sign up
-                                    </a>
-                                </Link>
-                                <p className='mt-6 text-center text-base font-medium text-gray-500'>
-                                    Existing customer?{' '}
-                                    <Link href='/auth/login'>
-                                        <a
-                                            href='#'
-                                            className='text-indigo-600 hover:text-indigo-500'
-                                        >
-                                            Sign in
-                                        </a>
-                                    </Link>
-                                </p>
-                            </div>
-                        </div>
+                        {body}
                     </div>
                 </div>
             </Transition>
