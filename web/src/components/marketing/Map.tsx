@@ -3,7 +3,12 @@ import GoogleMapReact from 'google-map-react';
 
 export const Map: React.FC = () => {
     return (
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div
+            style={{
+                height: '100%',
+            }}
+            className='m-5 shadow-lg rounded-lg'
+        >
             <GoogleMapReact
                 bootstrapURLKeys={{
                     key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
