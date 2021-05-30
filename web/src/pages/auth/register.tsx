@@ -7,6 +7,7 @@ import { MyInput } from '../../components/MyInput';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
+import { API_URL } from '../../constants';
 
 interface Values {
     firstName: string;
@@ -63,7 +64,7 @@ export default function IndexPage() {
                                 // POST Config
                                 const config: AxiosRequestConfig = {
                                     method: 'post',
-                                    url: `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+                                    url: `${API_URL}/auth/register`,
                                     headers: {
                                         'Content-Type': 'application/json',
                                     },
