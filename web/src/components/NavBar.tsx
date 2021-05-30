@@ -201,19 +201,7 @@ export const NavBar: React.FC = () => {
                             href='#'
                             className='text-base font-medium text-gray-500 hover:text-gray-900'
                         >
-                            Solution
-                        </a>
-                        <a
-                            href='#'
-                            className='text-base font-medium text-gray-500 hover:text-gray-900'
-                        >
-                            Docs
-                        </a>
-                        <a
-                            href='#'
-                            className='text-base font-medium text-gray-500 hover:text-gray-900'
-                        >
-                            Docs
+                            "Explore © 2021"
                         </a>
                     </nav>
                     {body}
